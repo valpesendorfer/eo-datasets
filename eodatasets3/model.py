@@ -333,12 +333,12 @@ class ComplicatedNamingConventions:
         if p.startswith("sentinel-1"):
             return f"s1{p[-1]}"
 
-        if not p.startswith("landsat"):
-            raise NotImplementedError(
-                f"TODO: implement non-landsat platform abbreviation " f"(got {p!r})"
-            )
+        if p.startswith("landsat"):
+            return f"ls{p[-1]}"
 
-        return f"ls{p[-1]}"
+        return p
+
+
 
     @property
     def instrument_abbreviated(self) -> Optional[str]:
@@ -354,9 +354,10 @@ class ComplicatedNamingConventions:
             return self.dataset.instrument[0].lower()
 
         if not p.startswith("landsat"):
-            raise NotImplementedError(
-                f"TODO: implement non-landsat instrument abbreviation " f"(got {p!r})"
-            )
+            return None
+            # raise NotImplementedError(
+            #     f"TODO: implement non-landsat instrument abbreviation " f"(got {p!r})"
+            # )
 
         # Extract from usgs standard:
         # landsat:landsat_product_id: LC08_L1TP_091075_20161213_20170316_01_T2
